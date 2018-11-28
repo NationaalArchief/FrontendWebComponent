@@ -1,0 +1,11 @@
+<div *ngIf="template"><span class="title">{{ template | titlecase }}</span></div>
+<div *ngIf="items" class="list"> 
+  <ul>
+    <li *ngFor="let item of items" [class.selected]="item.selected === true">
+     <span class="item"
+     (click)="onClick(item);">{{ item.label }}</span>
+     <span *ngIf="item.hits" class="badge">{{ item.hits }}</span>
+    </li>
+  </ul>
+</div>
+

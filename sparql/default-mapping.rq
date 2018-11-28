@@ -1,0 +1,35 @@
+PREFIX mydata: <http://example.com/resource/>
+PREFIX spif: <http://spinrdf.org/spif#>
+# Example RDF transformation using the custom IRIs and type
+CONSTRUCT {
+ ?myRowId a mydata:Row ;
+  mydata:id ?id ;
+  mydata:surname ?surname ;
+  mydata:firstName ?firstName ;
+  mydata:infix ?infix ;
+  mydata:literalName ?literalName ;
+  mydata:date ?date ;
+  mydata:year ?year ;
+  mydata:place ?place ;
+  mydata:province ?province ;
+  mydata:source ?source ;
+  mydata:uuid ?uuid .
+} WHERE {
+ # Triple patterns for accessing each row and the columns in contains
+ # Note that no triples will be generated for NULL values in the table
+ # You should inspect your data in Refine mode and add OPTIONAL accordingly
+ ?row a mydata:Row ;
+  mydata:id ?id ;
+  mydata:surname ?surname ;
+  mydata:firstName ?firstName ;
+  mydata:infix ?infix ;
+  mydata:literalName ?literalName ;
+  mydata:date ?date ;
+  mydata:year ?year ;
+  mydata:place ?place ;
+  mydata:province ?province ;
+  mydata:source ?source ;
+  mydata:uuid ?uuid .
+# Example construction of new IRIs for each row
+ BIND(IRI(spif:buildString("http://example.com/resource/{?1}", ENCODE_FOR_URI(?id))) AS ?myRowId)
+} LIMIT 100

@@ -1,0 +1,361 @@
+@prefix : <https://w3id.org/pnv#> .
+@prefix bgn: <http://biographynet.nl/schema/> .
+@prefix dbo: <http://dbpedia.org/ontology/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pnv: <https://w3id.org/pnv#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix premis: <http://www.loc.gov/premis/rdf/v3/> .
+@prefix schema: <http://schema.org/> .
+@prefix cidoc-crm: <http://www.cidoc-crm.org/cidoc-crm/> .
+@prefix wikidata: <http://www.wikidata.org/entity/> .
+@base <https://w3id.org/pnv#> .
+
+<https://w3id.org/pnv> rdf:type owl:Ontology ;
+                       rdfs:label "Person Name Vocabulary"@en .
+
+#################################################################
+#    Annotation properties
+#################################################################
+
+###  http://www.w3.org/2004/02/skos/core#altLabel
+skos:altLabel rdf:type owl:AnnotationProperty .
+
+
+###  http://www.w3.org/2004/02/skos/core#prefLabel
+skos:prefLabel rdf:type owl:AnnotationProperty .
+
+
+#################################################################
+#    Object Properties
+#################################################################
+
+###  https://w3id.org/pnv#hasName
+pnv:hasName rdf:type owl:ObjectProperty ;
+            rdfs:domain pnv:Person ;
+            rdfs:range pnv:PersonName ;
+            rdfs:label "has name"@en ,
+                       "heeft naam"@nl ;
+            skos:prefLabel "heeft naam"@nl .
+
+
+#################################################################
+#    Data properties
+#################################################################
+
+###  http://schema.org/givenName
+schema:givenName rdf:type owl:DatatypeProperty ;
+                 owl:equivalentProperty pnv:givenName ,
+                 						foaf:givenName ,
+                 						wikidata:P735 .
+
+
+###  http://xmlns.com/foaf/0.1/familyName
+foaf:familyName rdf:type owl:DatatypeProperty ;
+                owl:equivalentProperty pnv:surname ,
+                					   schema:familyName ,
+                					   wikidata:P734 .
+
+
+###  http://xmlns.com/foaf/0.1/givenName
+foaf:givenName rdf:type owl:DatatypeProperty ;
+               owl:equivalentProperty pnv:givenName ,
+               						  schema:givenName ,
+               						  wikidata:P735 .
+
+### http://xmlns.com/foaf/0.1/name
+foaf:name rdf:type owl:DatatypeProperty ;
+          owl:equivalentProperty pnv:literalName ,
+               					 wikidata:P2561 .
+
+
+### https://www.wikidata.org/wiki/Property:P2561
+wikidata:P2561 rdf:type owl:DatatypeProperty ;
+               owl:equivalentProperty pnv:literalName ,
+               					      foaf:name .
+
+
+### https://schema.org/familyName
+schema:familyName rdf:type owl:DatatypeProperty ;
+                  owl:equivalentProperty pnv:surname ,
+                					     foaf:familyName ,
+                					     wikidata:P734 .
+
+
+### https://www.wikidata.org/wiki/Property:P734
+wikidata:P734 rdf:type owl:DatatypeProperty ;
+              owl:equivalentProperty pnv:surname ,
+                					 foaf:familyName ,
+                					 schema:familyName .
+
+
+### https://www.wikidata.org/wiki/Property:P735
+wikidata:P735 rdf:type owl:DatatypeProperty ;
+              owl:equivalentProperty pnv:givenName ,
+                 					 foaf:givenName ,
+                 					 schema:givenName .
+
+
+### https://schema.org/honorificPrefix
+schema:honorificPrefix rdf:type owl:DatatypeProperty ;
+              		   owl:equivalentProperty pnv:prefix .
+
+
+### https://schema.org/honorificSuffix
+schema:honorificSuffix rdf:type owl:DatatypeProperty ;
+              		   owl:equivalentProperty pnv:honorificSuffix .
+
+
+### https://schema.org/disambiguatingDescription
+schema:disambiguatingDescription rdf:type owl:DatatypeProperty ;
+              		   			 owl:equivalentProperty pnv:disambiguatingDescription .
+
+
+###  https://w3id.org/pnv#baseSurname
+pnv:baseSurname rdf:type owl:DatatypeProperty ;
+                rdfs:domain pnv:PersonName ;
+                rdfs:range xsd:string ;
+                rdfs:comment """A Base surname is a family name without any prefixes, if those prefixes need to be ignored in sorting. If the family name is e.g. \"de Vries\" and it needs to be sorted under \"V\", the Base surname is \"Vries\". Base surname is equivalent to BioDes:geslachtsnaam."""@en ;
+                rdfs:label "base surname"@en ,
+                           "basis achternaam"@nl ;
+                skos:prefLabel "basis achternaam"@nl .
+
+
+###  https://w3id.org/pnv#disambiguatingDescription
+pnv:disambiguatingDescription rdf:type owl:DatatypeProperty ;
+                              rdfs:subPropertyOf pnv:suffix ;
+                              rdfs:domain pnv:PersonName ;
+                              rdfs:range xsd:string ;
+                              rdfs:comment """A Disambiguating description is a name part that is appended to make sure that the right person is designated
+For example \"Philips de Goede\", where \"de Goede\" is the disambiguating description. Suffixes like \"Sr.\" and \"Jr.\", used to distinguish a child from his parent, are als disambiguating descriptions."""@en ;
+                              rdfs:label "onderscheidend achtervoegsel"@nl ,
+                                         "disambiguating description"@en ;
+                              owl:equivalentProperty schema:disambiguatingDescription ;
+                              skos:prefLabel "onderscheidend achtervoegsel"@nl .
+
+
+###  https://w3id.org/pnv#firstName
+pnv:firstName rdf:type owl:DatatypeProperty ;
+              rdfs:domain pnv:PersonName ;
+              rdfs:range xsd:string ;
+              rdfs:comment "BioDes:voornaam"@en ,
+              			   "A First name is a combination of a given name, a patronym (if any) and a given name suffix. This property is only to be used by data providers who have combined these name elements into one field (following the BioDes structure). First name is equivalent to BioDes:voornaam."@en ;
+              rdfs:label "first name (Biodes)"@en ,
+                         "voornaam BioDes"@nl ;
+              skos:prefLabel "voornaam Biodes"@nl .
+
+
+###  https://w3id.org/pnv#givenName
+pnv:givenName rdf:type owl:DatatypeProperty ;
+              rdfs:domain pnv:PersonName ;
+              rdfs:range xsd:string ;
+              rdfs:comment "A2A:PersonNameFirstName"@en ,
+              			   "A Given name designates the name(s) given to someone at birth or any other name-giving event"@en ;
+              rdfs:label "given name"@en ,
+                         "een of meer voornamen"@nl ;
+              owl:equivalentProperty foaf:givenName ,
+              						 schema:givenName ,
+                                     wikidata:P735 ;
+              skos:altLabel "Christian name"@en ,
+                            "forename"@en ;
+              skos:prefLabel "een of meer voornamen"@nl .
+
+
+###  https://w3id.org/pnv#givenNameSuffix
+pnv:givenNameSuffix rdf:type owl:DatatypeProperty ;
+                    rdfs:subPropertyOf pnv:givenName ;
+                    rdfs:domain pnv:PersonName ;
+                    rdfs:range xsd:string ;
+                    rdfs:label "given name suffix"@en ,
+                               "toevoegsel voornaam"@nl ;
+                    skos:prefLabel "toevoegsel voornaam"@nl .
+
+
+###  https://w3id.org/pnv#honorificSuffix
+pnv:honorificSuffix rdf:type owl:DatatypeProperty ;
+                    rdfs:subPropertyOf pnv:suffix ;
+                    rdfs:domain pnv:PersonName ;
+                    rdfs:range xsd:string ;
+                    rdfs:comment "An Honorific suffix is a name part that is appended to distinguish someone"@en ;
+                    rdfs:label "honorific suffix"@en ,
+                               "titel (adellijk of burgerlijk) als achtervoegsel"@nl ;
+                    owl:equivalentProperty schema:honorificSuffix ;
+                    skos:prefLabel "titel (adellijk of burgerlijk) als achtervoegsel"@nl .
+
+
+###  https://w3id.org/pnv#infix
+pnv:infix rdf:type owl:DatatypeProperty ;
+          rdfs:domain pnv:PersonName ;
+          rdfs:range xsd:string ;
+          rdfs:comment "BioDes:intrapositie"@en ,
+          			   "An Infix designates name elements that come in between pnv:firstName and pnv:baseSurname. This property is only to be used by data providers who have structured their name elements following the BioDes structure. Infix is equivalent to BioDes:intrapositie."@en ;
+          rdfs:label "infix (BioDes)"@en .
+
+
+###  https://w3id.org/pnv#infixTitle
+pnv:infixTitle rdf:type owl:DatatypeProperty ;
+               rdfs:subPropertyOf pnv:infix ;
+               rdfs:domain pnv:PersonName ;
+               rdfs:range xsd:string ;
+               rdfs:comment "An Infix title designates a title in the middle of a name"@en ;
+               rdfs:label "adellijke titel in het midden van een naam"@nl ,
+                          "infix title"@en ;
+               skos:prefLabel "adellijke titel in het midden van een naam"@nl .
+
+
+###  https://w3id.org/pnv#literalName
+pnv:literalName rdf:type owl:DatatypeProperty ;
+                rdfs:domain pnv:PersonName ;
+                rdfs:range xsd:string ;
+                rdfs:comment "A2A:PersonNameLiteral"@en ,
+                			 "Literal name designates a full personal name. Every person has to have a full name. If a name is not known at all, a text like 'Unknown' should be used"@en ;
+                rdfs:label "full name"@en ,
+                		   "volledige naam"@nl ;
+                skos:altLabel: "letterlijke naam"@nl ;
+                owl:equivalentProperty foaf:name ,
+                					   wikidata:P2561 ;
+                rdfs:seeAlso <https://schema.org/name> ;
+                skos:prefLabel "volledige naam"@nl .
+
+
+###  https://w3id.org/pnv#patronym
+pnv:patronym rdf:type owl:DatatypeProperty ;
+             rdfs:domain pnv:PersonName ;
+             rdfs:range xsd:string ;
+             rdfs:comment "A2A:PersonNamePatronym"@en ,
+             			  "A Patronym is a name element based on the given name of one's father or grandfather. This is also the preferred property for a matronym (i.e. a name element based on the given name of one's mother or grandmother)."@en ;
+             rdfs:label "patroniem"@nl ,
+                        "patronym"@en ;
+             skos:prefLabel "patroniem"@nl .
+
+
+###  https://w3id.org/pnv#prefix
+pnv:prefix rdf:type owl:DatatypeProperty ;
+           rdfs:domain pnv:PersonName ;
+           rdfs:range xsd:string ;
+           rdfs:comment "BioDes:prepositie"@en ,
+           				"A Prefix is a noble or honorific title prefixing a name, e.g. \"Prof. dr.\" or \"Jhr.\""^^xsd:string ;
+           rdfs:label "prefix"@en ,
+                      "voorvoegsel"@nl ;
+           owl:equivalentProperty schema:honorificPrefix .
+
+
+###  https://w3id.org/pnv#suffix
+pnv:suffix rdf:type owl:DatatypeProperty ;
+           rdfs:domain pnv:PersonName ;
+           rdfs:range xsd:string ;
+           rdfs:comment "BioDes:postpositie"@en ,
+           				"A Suffix designates name elements that come after the family name. This property is only to be used by data providers who have structured their name elements following the BioDes structure."^^xsd:string ;
+           rdfs:label "achtervoegsel BioDes"@nl ,
+                      "suffix (BioDes)"@en ;
+           skos:prefLabel "achtervoegsel BioDes"@nl .
+
+
+###  https://w3id.org/pnv#surname
+pnv:surname rdf:type owl:DatatypeProperty ;
+            rdfs:domain pnv:PersonName ;
+            rdfs:range xsd:string ;
+            rdfs:comment """A surname is the name of the family a person is born into, including one or more prefixes. In some cases the honorific prefix can be incorporated into the surname (e.g. Van Welderen baron Rengers)."""@en ;
+            rdfs:label "familienaam"@nl ,
+                       "surname"@en ;
+            owl:equivalentProperty foaf:familyName ,
+            					   schema:familyName ,
+                         		   wikidata:P734 ;
+            skos:altLabel "surname"@en ;
+            skos:prefLabel "familienaam"@nl .
+
+
+###  https://w3id.org/pnv#surnamePrefix
+pnv:surnamePrefix rdf:type owl:DatatypeProperty ;
+                  rdfs:subPropertyOf owl:topDataProperty ;
+                  rdfs:domain pnv:PersonName ;
+                  rdfs:range xsd:string ;
+                  rdfs:comment "A2A:PersonNamePrefixLastName"@en ,
+                  			   "A Surname prefix is a name part prefixing the surname (e.g. \"van\" or \"van den\")."@en ;
+                  rdfs:label "tussenvoegsel"@nl ,
+                             "surname prefix"@en ;
+                  skos:prefLabel "tussenvoegsel"@nl .
+
+
+###  https://w3id.org/pnv#trailingPatronym
+pnv:trailingPatronym rdf:type owl:DatatypeProperty ;
+                     rdfs:subPropertyOf pnv:patronym ;
+                     rdfs:domain pnv:PersonName ;
+                     rdfs:range xsd:string ;
+                     rdfs:comment "A Trailing patronym refers to the parent's given name, suffixing the person's family name, mostly used for disambiguation."^^xsd:string ;
+                     rdfs:label "patroniem na achternaam"@nl ,
+                                "trailing patronym"@en ;
+                     skos:prefLabel "patroniem na achternaam"@nl .
+
+
+#################################################################
+#    Classes
+#################################################################
+
+###  http://dbpedia.org/ontology/Name
+dbo:Name rdf:type owl:Class ;
+         owl:equivalentClass pnv:PersonName .
+
+
+###  http://dbpedia.org/ontology/Person
+dbo:Person rdf:type owl:Class ;
+           owl:equivalentClass pnv:Person .
+
+
+###  http://schema.org/Person
+schema:Person rdf:type owl:Class ;
+              owl:equivalentClass pnv:Person .
+
+
+###  http://www.cidoc-crm.org/cidoc-crm/E21_person
+cidoc-crm:E21_person rdf:type owl:Class ;
+                     owl:equivalentClass pnv:Person .
+
+
+###  http://www.loc.gov/premis/rdf/v3/Person
+premis:Person rdf:type owl:Class ;
+              rdfs:subClassOf prov:Person ,
+                              foaf:Person .
+
+
+###  http://www.w3.org/ns/prov#Person
+prov:Person rdf:type owl:Class .
+
+
+###  http://xmlns.com/foaf/0.1/Person
+foaf:Person rdf:type owl:Class ;
+            owl:equivalentClass pnv:Person .
+
+
+###  https://w3id.org/pnv#Person
+pnv:Person rdf:type owl:Class ;
+           owl:disjointWith pnv:PersonName ;
+           rdfs:comment "A Person is a human being whose individual existence can somehow be documented"@en ;
+           rdfs:label "Person"@nl ,
+                      "Persoon"@nl ;
+           skos:prefLabel "Person"@en ,
+                          "Persoon"@nl .
+
+
+###  https://w3id.org/pnv#PersonName
+pnv:PersonName rdf:type owl:Class ;
+               rdfs:comment "A name is considered to be a resource type in its own right"@en ;
+               rdfs:label "A Person's name"@en ,
+                          "Naam van een persoon"@nl ;
+               skos:prefLabel "Naam van een persoon"@nl .
+
+
+### https://www.wikidata.org/wiki/Q5
+wikidata:Q5 rdf:type owl:Class ;
+                     owl:equivalentClass pnv:Person .
+
+### https://www.wikidata.org/wiki/Q1071027
+wikidata:Q1071027 rdf:type owl:Class ;
+                     owl:equivalentClass pnv:PersonName .
+
+###  Generated by the OWL API (version 4.5.6.2018-09-06T00:27:41Z) https://github.com/owlcs/owlapi

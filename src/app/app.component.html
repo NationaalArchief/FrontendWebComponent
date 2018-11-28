@@ -1,0 +1,25 @@
+<div style="text-align:left">
+  <!-- <h1>
+    Welcome to {{ title }}
+  </h1> -->
+  <div class="container">
+    <div class="facets">
+      <app-list (select)="onSelect($event)" class="province" templateRole="facet" multiSelect=false template="province"
+        [dataChanged]="events.asObservable()"></app-list>
+      <app-list (select)="onSelect($event)" class="place" templateRole="facet" multiSelect=false template="place"
+        [dataChanged]="events.asObservable()"></app-list>
+    </div>
+    <div class="content">
+      <div class="listcontainer">
+        <app-list (select)="onSelect($event)" class="person" templateRole="content" multiSelect=false template="person"
+          [dataChanged]="events.asObservable()"></app-list>
+      </div>
+      <div class="detail">
+        <div><span>Emigrant</span></div>
+        <app-person class="persondetail" templateRole="content" multiSelect=false template="persondetail" [dataChanged]="events.asObservable()"></app-person>
+        <div><span>Map</span></div>
+        <app-map class="mapdetail" templateRole="content" multiSelect=false template="mapdetail" [dataChanged]="events.asObservable()"></app-map>
+      </div>
+    </div>
+  </div>
+</div>
