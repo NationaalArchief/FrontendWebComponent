@@ -8,7 +8,7 @@ import { catchError, tap } from 'rxjs/operators';
 })
 export class SparqlService {
 
-  serviceURL = 'http://localhost:7200/repositories/tutorial';
+  serviceURL = 'http://localhost:7200/repositories/NA1-RDFS-PLUS';
 
   constructor(
     private http: HttpClient

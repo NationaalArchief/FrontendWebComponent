@@ -45,10 +45,10 @@ export class PersonComponent extends ListComponent implements OnInit {
         ?patronym ?prefix ?givenNameSuffix ?infix
         ?suffix ?disambiguatingDescription ?honorificSuffixwhere
         where {
-          <${items[0].uri}> dbo:residence ?place ;
+          <${items[0].uri}> naa:hasResidency ?place ;
           pnv:hasName ?nameURI .
           ?uri pnv:hasName ?nameURI .
-          ?uri dbo:residence ?place ;
+          ?uri naa:hasResidency ?place ;
           pnv:hasName ?nameURI .
           optional { ?nameURI pnv:literalName ?name } .
           optional { ?nameURI pnv:literalName ?literalName } .
@@ -75,7 +75,7 @@ export class PersonComponent extends ListComponent implements OnInit {
       ${ListComponent.PREFIXES}
       select ?uri ?name ?firstName ?infix ?surname ?residence where {
         ?uri a pnv:Person ;
-        dbo:residence ?residence ;
+        naa:hasResidency ?residence ;
         pnv:hasName ?nameURI .
         optional { ?nameURI pnv:literalName ?name } .
         optional { ?nameURI pnv:firstName ?firstName } .

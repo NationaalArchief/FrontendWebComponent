@@ -11,6 +11,7 @@ import { Observable } from 'rxjs';
 export class ListComponent implements OnInit, AfterContentInit {
 
   static PREFIXES = `
+  PREFIX naa: <http://archief.nl/def/>
   PREFIX hg: <http://rdf.histograph.io/>
   PREFIX dct: <http://purl.org/dc/terms/>
   PREFIX dbo: <http://dbpedia.org/ontology/>
@@ -111,7 +112,7 @@ export class ListComponent implements OnInit, AfterContentInit {
         ${ListComponent.PREFIXES}
         select ?uri ?name ?firstName ?infix ?surname ?place where {
           ?uri a pnv:Person ;
-          dbo:residence ?place ;
+          naa:hasResidency ?place ;
           pnv:hasName ?nameURI .
           optional { ?nameURI pnv:literalName ?name } .
           optional { ?nameURI pnv:firstName ?firstName } .
@@ -126,7 +127,7 @@ export class ListComponent implements OnInit, AfterContentInit {
           select ?uri ?name (count(?residents) as ?hits) where {
 	          ?uri dct:type hg:Place ;
             rdfs:label ?name .
-            ?residents dbo:residence ?uri
+            ?residents naa:hasResidency ?uri
           }
           group by ?uri ?name
           order by desc(?hits)`;
@@ -139,7 +140,7 @@ export class ListComponent implements OnInit, AfterContentInit {
 	      ?uri dct:type hg:Province ;
         rdfs:label ?name .
         ?place hg:liesIn ?uri .
-        ?residents dbo:residence ?place
+        ?residents naa:hasResidency ?place
         }
         group by ?uri ?name
         order by desc(?hits)`;
